@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR界面交互技术 - 星空钢琴3D版</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="container">
+        <!-- 加载界面 -->
+        <div id="loading-screen">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">正在加载VR界面交互技术演示...</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="tech-requirements">
+                <div>正在初始化技术组件：</div>
+                <div class="requirement" id="req-env">环境搭建</div>
+                <div class="requirement" id="req-lights">光源系统</div>
+                <div class="requirement" id="req-materials">材质应用</div>
+                <div class="requirement" id="req-geometry">几何体使用</div>
+                <div class="requirement" id="req-particles">点与精灵</div>
+                <div class="requirement" id="req-camera">相机控制</div>
+                <div class="requirement" id="req-textures">纹理应用</div>
+                <div class="requirement" id="req-postprocess">后期处理</div>
+                <div class="requirement" id="req-physics">物理引擎</div>
+                <div class="requirement" id="req-navigation">场景漫游</div>
+                <div class="requirement" id="req-picking">物体拾取</div>
+            </div>
+        </div>
+
+        <!-- 3D渲染画布 -->
+        <canvas id="canvas"></canvas>
+
+        <!-- UI覆盖层 -->
+        <div id="ui-overlay">
+            <div id="title">VR界面交互技术 - 星空钢琴3D</div>
+            
+            <!-- 性能统计 -->
+            <div id="performance-stats">
+                <div>FPS: <span id="fps">60</span></div>
+                <div>Draw Calls: <span id="draw-calls">0</span></div>
+                <div>Triangles: <span id="triangles">0</span></div>
+                <div>Memory: <span id="memory">0</span>MB</div>
+            </div>
+
+            <!-- 控制面板 -->
+            <div id="controls-panel">
+                <h3>🎛️ 控制面板</h3>
+                
+                <div class="control-group">
+                    <label>相机控制模式</label>
+                    <button id="camera-orbit" class="active">轨道控制</button>
+                    <button id="camera-fps">第一人称</button>
+                    <button id="camera-fly">飞行模式</button>
+                </div>
+
+                <div class="control-group">
+                    <label>光照设置</label>
+                    <div>环境光: <input type="range" id="ambient-light" min="0" max="1" step="0.1" value="0.3"></div>
+                    <div>方向光: <input type="range" id="directional-light" min="0" max="2" step="0.1" value="0.8"></div>
+                    <div>点光源: <input type="range" id="point-light" min="0" max="2" step="0.1" value="1"></div>
+                    <div>聚光灯: <input type="range" id="spot-light" min="0" max="2" step="0.1" value="0.5"></div>
+                </div>
+
+                <div class="control-group">
+                    <label>材质设置</label>
+                    <button id="material-basic">基础材质</button>
+                    <button id="material-physical" class="active">物理材质</button>
+                    <button id="material-shader">着色器材质</button>
+                </div>
+
+                <div class="control-group">
+                    <label>视觉效果</label>
+                    <div><input type="checkbox" id="bloom-effect" checked> 辉光效果</div>
+                    <div><input type="checkbox" id="fog-effect" checked> 雾效</div>
+                    <div><input type="checkbox" id="shadows" checked> 阴影</div>
+                    <div><input type="checkbox" id="particles" checked> 粒子效果</div>
+                </div>
+
+                <div class="control-group">
+                    <label>粒子系统</label>
+                    <div>粒子数量: <input type="range" id="particle-count" min="100" max="2000" step="100" value="1000"></div>
+                    <div>粒子大小: <input type="range" id="particle-size" min="0.01" max="0.2" step="0.01" value="0.05"></div>
+                </div>
+
+                <div class="control-group">
+                    <label>场景控制</label>
+                    <button id="reset-camera">重置相机</button>
+                    <button id="toggle-wireframe">线框模式</button>
+                    <button id="toggle-physics">物理模拟</button>
+                </div>
+            </div>
+
+            <!-- 信息面板 -->
+            <div id="info-panel">
+                <h3>🎹 使用说明</h3>
+                <div class="info-item"><strong>鼠标操作：</strong></div>
+                <div class="info-item">• 左键拖拽：旋转视角</div>
+                <div class="info-item">• 右键拖拽：平移视角</div>
+                <div class="info-item">• 滚轮：缩放距离</div>
+                <div class="info-item">• 点击钢琴键：演奏音符</div>
+                
+                <div class="info-item" style="margin-top: 15px;"><strong>键盘操作：</strong></div>
+                <div class="info-item">• 1-8：高音区演奏</div>
+                <div class="info-item">• Q-]：中音区演奏</div>
+                <div class="info-item">• A-Enter：中低音区演奏</div>
+                <div class="info-item">• Z-Tab：低音区演奏</div>
+                
+                <div class="info-item" style="margin-top: 15px;"><strong>快捷键：</strong></div>
+                <div class="info-item">• V：切换VR模式</div>
+                <div class="info-item">• R：重置相机</div>
+                <div class="info-item">• H：显示/隐藏帮助</div>
+                
+                <div class="info-item" style="margin-top: 15px;"><strong>技术特性：</strong></div>
+                <div class="info-item">✅ 11项VR界面交互技术</div>
+                <div class="info-item">✅ Three.js 3D渲染引擎</div>
+                <div class="info-item">✅ 物理引擎集成</div>
+                <div class="info-item">✅ 后期处理效果</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.20.0/cannon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    
+    <!-- 应用程序 -->
+    <script src="js/main.js"></script>
+</body>
+</html>
