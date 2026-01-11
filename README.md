@@ -160,19 +160,7 @@ python -m http.server 8000
 - **Triangles**: 三角形数量
 - **Memory**: 内存使用情况
 
-## 📁 项目结构
 
-```
-VR-Piano-Interface/
-├── index.html              # 主入口文件
-├── css/
-│   └── main.css            # 主样式文件
-├── js/
-│   └── main.js             # 主应用逻辑
-├── assets/                 # 资源文件目录
-├── docs/                   # 文档目录
-└── README.md               # 项目说明
-```
 
 ## 🔧 技术架构
 
@@ -246,13 +234,6 @@ VRPianoInterface
 - [ ] MIDI键盘支持
 - [ ] 录音和回放功能
 
-### 长期愿景
-- [ ] 多人协作演奏
-- [ ] AI智能伴奏
-- [ ] 乐谱显示系统
-- [ ] 音乐教学模式
-
-## 📞 技术支持
 
 ### 常见问题
 1. **没有声音**: 点击页面启用音频权限
